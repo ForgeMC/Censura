@@ -61,38 +61,29 @@ replacements:
 filter:
   severe:
     action:
-      - "command: ban %player% Censura - Using offensive words."
+      - "command: tempmute %player% 4h Censura: Używanie obraźliwych słów"
     match:
-      - nigger
-      - nibber
-      - niga
-      - niba
-      - hitler did nothing wrong
-      - heil hitler
+      - nigger: "contain"
+      - nibber: "contain"
+      - niga: "contain"
+      - niba: "contain"
+      - pedal: "contain"
+      - zjeb
+      - chuj
   normal:
     action:
-      - "command: kick %player% Censura - Stop using curse words!"
+      - "message: Censura - nie używaj wulgaryzmów, %player%!"
     match:
-      - fuck: "contain"
-      - bitch
-      - faggot
-      - tranny
-      - trannie
-      - gay is a sin
-      - gay is sin
+      - hitler: "contain"
+      - kurwa
   light:
-    action:
-      - "message: Censura - Stop using bad words, %player%!"
     match:
-      - sex
-      - porn: "contain"
-      - shit: "contain"
-      - fag: "contain"
-      - nigg: "contain"
+    - zbiaks
+    - pronko
 
 # Messages used by the plugin
 messages:
-  no-permission: "Censura - &cYou don't have permission to do this."
-  no-such-command: "Censura - &cThere is no such command."
-  config-reloaded: "Censura - &aConfiguration reloaded."
-  kick-bad-name: "Censura\n&cYour name contains bad words!"
+  no-permission: "Censura - &cNie masz uprawnień, by to zrobić."
+  no-such-command: "Censura - &cNie istnieje taka komenda."
+  config-reloaded: "Censura - &aKonfiguracja przeładowana."
+  kick-bad-name: "Censura\n&cTwój nick zawiera zakazane słowa!"
