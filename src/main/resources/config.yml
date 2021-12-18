@@ -61,25 +61,44 @@ replacements:
 filter:
   severe:
     action:
-      - "command: tempmute %player% 4h Censura: Używanie obraźliwych słów"
+      - "command: tempmute %player% 4h Używanie obraźliwych słów"
     match:
       - nigger: "contain"
       - nibber: "contain"
       - niga: "contain"
       - niba: "contain"
       - pedal: "contain"
+      - niger: "contain"
       - zjeb
       - chuj
+      - huj
+      - 卐: "contain"
+      - 卍: "contain"
   normal:
     action:
-      - "message: Censura - nie używaj wulgaryzmów, %player%!"
+      - "ghost"
     match:
       - hitler: "contain"
       - kurwa
-  light:
+      - (kurw[a-z]*): "regex"
+      - (jeba[a-zęóąśłżźćń]*): "regex"
+      - (pierd[ao][^ł]l*): "regex"
+      - (cip[a-zęóąśłżźćń]*): "regex"
+      - (pi[zź]d): "regex"
+      - (g[^łl]([óo]wn)): "regex"
+      - (dup[ay]): "regex"
+      - (dupie): "regex"
+      - (kutas): "regex"
+      - (penis): "regex"
+      - (dziwk[aoi]): "regex"
+      - (dziwek): "regex"
+  advertise:
+    action:
+      - "ghost"
     match:
-    - zbiaks
-    - pronko
+      - ([ &.,]|^)([\w]{5,})([., ]){1,}(pl|com|org|net|biz|mobi|kz|tk|server.pro|serv.nu)([ &.,]|$): "regex"
+      - ([\d]{1,3}[.,]{1,}){3,}([\d]{1,3}): "regex"
+      - aternos
 
 # Messages used by the plugin
 messages:
@@ -87,3 +106,5 @@ messages:
   no-such-command: "Censura - &cNie istnieje taka komenda."
   config-reloaded: "Censura - &aKonfiguracja przeładowana."
   kick-bad-name: "Censura\n&cTwój nick zawiera zakazane słowa!"
+
+# Regex whitelist is configured in RegexMatch.

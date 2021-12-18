@@ -17,7 +17,7 @@ public class EntityRenameListener implements Listener {
         if (handItem.getType() != Material.NAME_TAG)
             return;
 
-        if (Filter.filter(handItem.getItemMeta().getDisplayName(), event.getPlayer()))
+        if (Filter.filter(handItem.getItemMeta().getDisplayName(), event.getPlayer(), event))
             event.setCancelled(true);
 
     }

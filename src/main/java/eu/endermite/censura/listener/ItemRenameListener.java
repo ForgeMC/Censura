@@ -29,7 +29,7 @@ public class ItemRenameListener implements Listener {
         AnvilInventory anvil = (AnvilInventory)inv;
         Player player = (Player)event.getWhoClicked();
 
-        if (Filter.filter(anvil.getRenameText(), player))
+        if (Filter.filter(anvil.getRenameText(), player, event))
             event.setCancelled(true);
 
 

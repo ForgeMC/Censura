@@ -15,7 +15,7 @@ public class BookEditListener implements Listener {
         BookMeta bookMeta = event.getNewBookMeta();
         try {
             for (String page : bookMeta.getPages()) {
-                if (Filter.filter(page, event.getPlayer())) {
+                if (Filter.filter(page, event.getPlayer(), event)) {
                     event.setCancelled(true);
                     return;
                 }
@@ -23,7 +23,7 @@ public class BookEditListener implements Listener {
         } catch (NullPointerException ignored) {}
         if (!event.isSigning())
             return;
-        if (Filter.filter(event.getNewBookMeta().getTitle(), event.getPlayer()))
+        if (Filter.filter(event.getNewBookMeta().getTitle(), event.getPlayer(), event))
             event.setCancelled(true);
     }
 }

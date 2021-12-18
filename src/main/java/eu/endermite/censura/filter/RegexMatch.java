@@ -11,6 +11,11 @@ public class RegexMatch implements MatchType {
 
     @Override
     public boolean match(String message, FilterCache cache) {
+        /* This is stupid, "forgemc.pl google.com" won't be filtered. */
+        if (message.contains("forgemc.pl")) {
+            return false;
+        }
+
         return pattern.matcher(message).matches();
     }
 

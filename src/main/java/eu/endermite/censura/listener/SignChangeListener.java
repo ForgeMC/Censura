@@ -14,7 +14,7 @@ public class SignChangeListener implements Listener {
 
         String content = String.join(" ", event.getLines());
 
-        if (Filter.filter(content, player))
+        if (Filter.filter(content, player, event))
             event.setCancelled(true);
 
     }

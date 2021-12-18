@@ -10,8 +10,6 @@ public class ChatEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onChatEvent(AsyncPlayerChatEvent event) {
-        if (Filter.filter(event.getMessage(), event.getPlayer()))
-            event.setCancelled(true);
+        Filter.filter(event.getMessage(), event.getPlayer(), event);
     }
-
 }

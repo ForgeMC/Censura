@@ -6,8 +6,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+import javax.annotation.Nullable;
 import java.text.Normalizer;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Filter {
@@ -37,7 +43,7 @@ public class Filter {
         return false;
     }
 
-    public static boolean filter(String message, Player player) {
+    public static boolean filter(String message, Player player, @Nullable Event event) {
         if (player.isOp() && Censura.getCachedConfig().getOpBypass())
             return false;
 
@@ -46,7 +52,7 @@ public class Filter {
 
         for (CachedConfig.FilterCategory filter : Censura.getCachedConfig().getCategories()) {
             if (detect(message, filter)) {
-                doActions(filter.getPunishments(), player);
+                doActions(filter.getPunishments(), player, event);
                 return true;
             }
         }
@@ -62,7 +68,7 @@ public class Filter {
         return false;
     }
 
-    public static void doActions(List<String> actions, Player player) {
+    public static void doActions(List<String> actions, Player player, Event event) {
         for (String a : actions) {
             if (a.startsWith("command:")) {
                 CommandSender sender = Censura.getPlugin().getServer().getConsoleSender();
@@ -73,6 +79,22 @@ public class Filter {
                 String message = a.replaceFirst("message: ", "");
                 String msg = message.replaceAll("%player%", player.getName());
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+            } else if (a.equals("ghost")) {
+                if (event instanceof AsyncPlayerChatEvent) {
+                    // Make message invisible to everyone except sender.
+                    AsyncPlayerChatEvent chatEvent = (AsyncPlayerChatEvent) event;
+                    Set<Player> recipients = chatEvent.getRecipients();
+                    recipients.removeIf(recipient -> recipient != chatEvent.getPlayer());
+
+//                  Notify admins about filter
+                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                        if (onlinePlayer.hasPermission("censura.filteredMessages")) {
+                            String messageForAdmins = ChatColor.translateAlternateColorCodes('&', String.format("&cCensura - %s: %s", onlinePlayer.getName(), chatEvent.getMessage()));
+                            onlinePlayer.sendMessage(messageForAdmins);
+                            Censura.getPlugin().getLogger().info("Sent to admins.");
+                        }
+                    }
+                }
             }
         }
     }
