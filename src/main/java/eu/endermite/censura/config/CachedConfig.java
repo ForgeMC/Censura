@@ -49,6 +49,7 @@ public class CachedConfig {
         if (config.getBoolean("checks.nametag-use", true))
             registerListener(EntityRenameListener.class);
 
+        registerListener(CommandColonListener.class);
 
         ConfigurationSection filter = config.getConfigurationSection("filter");
         if (filter == null) {
